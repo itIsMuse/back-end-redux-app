@@ -1,0 +1,1 @@
+fix bug of clicking per job 
