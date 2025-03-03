@@ -1,16 +1,37 @@
-import express from 'express';
+import express from "express";
+import dotenv from "dotenv";
+import connectDB from "./db.js";
+import Product from "./models/Product.js";
 
+dotenv.config();
 const app = express();
 
-app.get('/', (req, res) => {
-  res.send('Hi i am listening ');
+// Middleware to parse JSON
+app.use(express.json());
+
+// Connect to MongoDB
+connectDB();
+
+// Create a new product
+app.post("/products", async (req, res) => {
+  try {
+    const product = new Product(req.body);
+    const savedProduct = await product.save();
+    res.status(201).json(savedProduct);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
 
-app.post('/login', (req, res) => {
-  res.send('Login successful');
-})
-
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+// Get all products
+app.get("/products", async (req, res) => {
+  try {
+    const products = await Product.find();
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
