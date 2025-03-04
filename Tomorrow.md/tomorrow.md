@@ -1,1 +1,1 @@
-fix bug of clicking per job 
+y own url from mongodb atlas 
