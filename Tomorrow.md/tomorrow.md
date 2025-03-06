@@ -1,1 +1,1 @@
-created my account, setting up for later , here to mark attendance 
+interacting with my database for the loading of the swimming files and the whole ordering and stuff
